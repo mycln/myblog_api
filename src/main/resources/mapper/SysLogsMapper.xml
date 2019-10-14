@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clouderwork.dao.SysLogsMapper">
+  <resultMap id="BaseResultMap" type="com.clouderwork.pojo.SysLogs">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="content_type" jdbcType="VARCHAR" property="contentType" />
+    <result column="request_type" jdbcType="VARCHAR" property="requestType" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="server_addr" jdbcType="VARCHAR" property="serverAddr" />
+    <result column="remote_addr" jdbcType="VARCHAR" property="remoteAddr" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="browser_name" jdbcType="VARCHAR" property="browserName" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+    <result column="request_uri" jdbcType="VARCHAR" property="requestUri" />
+    <result column="is_login" jdbcType="INTEGER" property="isLogin" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="is_exception" jdbcType="INTEGER" property="isException" />
+    <result column="exception_name" jdbcType="VARCHAR" property="exceptionName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.clouderwork.pojo.SysLogs">
+    <result column="request_params" jdbcType="LONGVARCHAR" property="requestParams" />
+    <result column="exception_msg" jdbcType="LONGVARCHAR" property="exceptionMsg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, class_name, method, content_type, request_type, description, server_addr, remote_addr, 
+    device_name, browser_name, user_agent, request_uri, is_login, user_id, add_time, 
+    is_exception, exception_name
+  </sql>
+  <sql id="Blob_Column_List">
+    request_params, exception_msg
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.clouderwork.pojo.SysLogsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.clouderwork.pojo.SysLogsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_logs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_logs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.clouderwork.pojo.SysLogsExample">
+    delete from sys_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.clouderwork.pojo.SysLogs">
+    insert into sys_logs (id, class_name, method, 
+      content_type, request_type, description, 
+      server_addr, remote_addr, device_name, 
+      browser_name, user_agent, request_uri, 
+      is_login, user_id, add_time, 
+      is_exception, exception_name, request_params, 
+      exception_msg)
+    values (#{id,jdbcType=BIGINT}, #{className,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{contentType,jdbcType=VARCHAR}, #{requestType,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{serverAddr,jdbcType=VARCHAR}, #{remoteAddr,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+      #{browserName,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR}, #{requestUri,jdbcType=VARCHAR}, 
+      #{isLogin,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{isException,jdbcType=INTEGER}, #{exceptionName,jdbcType=VARCHAR}, #{requestParams,jdbcType=LONGVARCHAR}, 
+      #{exceptionMsg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.clouderwork.pojo.SysLogs">
+    insert into sys_logs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="contentType != null">
+        content_type,
+      </if>
+      <if test="requestType != null">
+        request_type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="serverAddr != null">
+        server_addr,
+      </if>
+      <if test="remoteAddr != null">
+        remote_addr,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="browserName != null">
+        browser_name,
+      </if>
+      <if test="userAgent != null">
+        user_agent,
+      </if>
+      <if test="requestUri != null">
+        request_uri,
+      </if>
+      <if test="isLogin != null">
+        is_login,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="isException != null">
+        is_exception,
+      </if>
+      <if test="exceptionName != null">
+        exception_name,
+      </if>
+      <if test="requestParams != null">
+        request_params,
+      </if>
+      <if test="exceptionMsg != null">
+        exception_msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null">
+        #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="requestType != null">
+        #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAddr != null">
+        #{serverAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteAddr != null">
+        #{remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="browserName != null">
+        #{browserName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null">
+        #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null">
+        #{isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isException != null">
+        #{isException,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionName != null">
+        #{exceptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null">
+        #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exceptionMsg != null">
+        #{exceptionMsg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.clouderwork.pojo.SysLogsExample" resultType="java.lang.Long">
+    select count(*) from sys_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_logs
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.className != null">
+        class_name = #{record.className,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentType != null">
+        content_type = #{record.contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestType != null">
+        request_type = #{record.requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverAddr != null">
+        server_addr = #{record.serverAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remoteAddr != null">
+        remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceName != null">
+        device_name = #{record.deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browserName != null">
+        browser_name = #{record.browserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAgent != null">
+        user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestUri != null">
+        request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLogin != null">
+        is_login = #{record.isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isException != null">
+        is_exception = #{record.isException,jdbcType=INTEGER},
+      </if>
+      <if test="record.exceptionName != null">
+        exception_name = #{record.exceptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestParams != null">
+        request_params = #{record.requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.exceptionMsg != null">
+        exception_msg = #{record.exceptionMsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_logs
+    set id = #{record.id,jdbcType=BIGINT},
+      class_name = #{record.className,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      content_type = #{record.contentType,jdbcType=VARCHAR},
+      request_type = #{record.requestType,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      server_addr = #{record.serverAddr,jdbcType=VARCHAR},
+      remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      browser_name = #{record.browserName,jdbcType=VARCHAR},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      is_login = #{record.isLogin,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      is_exception = #{record.isException,jdbcType=INTEGER},
+      exception_name = #{record.exceptionName,jdbcType=VARCHAR},
+      request_params = #{record.requestParams,jdbcType=LONGVARCHAR},
+      exception_msg = #{record.exceptionMsg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_logs
+    set id = #{record.id,jdbcType=BIGINT},
+      class_name = #{record.className,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      content_type = #{record.contentType,jdbcType=VARCHAR},
+      request_type = #{record.requestType,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      server_addr = #{record.serverAddr,jdbcType=VARCHAR},
+      remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      browser_name = #{record.browserName,jdbcType=VARCHAR},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      is_login = #{record.isLogin,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      is_exception = #{record.isException,jdbcType=INTEGER},
+      exception_name = #{record.exceptionName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.clouderwork.pojo.SysLogs">
+    update sys_logs
+    <set>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="contentType != null">
+        content_type = #{contentType,jdbcType=VARCHAR},
+      </if>
+      <if test="requestType != null">
+        request_type = #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAddr != null">
+        server_addr = #{serverAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteAddr != null">
+        remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="browserName != null">
+        browser_name = #{browserName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null">
+        request_uri = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="isLogin != null">
+        is_login = #{isLogin,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isException != null">
+        is_exception = #{isException,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionName != null">
+        exception_name = #{exceptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null">
+        request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exceptionMsg != null">
+        exception_msg = #{exceptionMsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.clouderwork.pojo.SysLogs">
+    update sys_logs
+    set class_name = #{className,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=VARCHAR},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      server_addr = #{serverAddr,jdbcType=VARCHAR},
+      remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      browser_name = #{browserName,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      is_login = #{isLogin,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      is_exception = #{isException,jdbcType=INTEGER},
+      exception_name = #{exceptionName,jdbcType=VARCHAR},
+      request_params = #{requestParams,jdbcType=LONGVARCHAR},
+      exception_msg = #{exceptionMsg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.clouderwork.pojo.SysLogs">
+    update sys_logs
+    set class_name = #{className,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      content_type = #{contentType,jdbcType=VARCHAR},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      server_addr = #{serverAddr,jdbcType=VARCHAR},
+      remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      browser_name = #{browserName,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      is_login = #{isLogin,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      is_exception = #{isException,jdbcType=INTEGER},
+      exception_name = #{exceptionName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

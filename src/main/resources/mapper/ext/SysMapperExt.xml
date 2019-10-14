@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clouderwork.dao.ext.SysMapperExt">
+
+    <select id="getUserMenuList" resultType="com.clouderwork.pojo.vo.SysMenuVo">
+        select distinct m.* from sys_menu m, sys_user_role sur,sys_role_menu srm
+        <where>
+            m.status=1
+            <if test="userid != null">
+              and sur.userid = #{userid}
+            </if>
+            and sur.roleid=srm.roleid and srm.menuid=m.id
+        </where>
+        ORDER BY m.levels asc,m.sort asc
+    </select>
+
+</mapper>

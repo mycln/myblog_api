@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<!-- 使用 com.clouderwork.mybatisGenerator.GeneratorRun.java  -->
+<generatorConfiguration>
+    <!-- 配置文件 -->
+    <properties resource="application-dev.properties" />
+    <context id="context" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- plugin -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+
+        <!-- 取消生成的代码注释 -->
+        <commentGenerator type="com.clouderwork.mybatisGenerator.MyCommentGenerator">
+            <property name="suppressAllComments" value="false" />
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 连接配置 -->
+        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+                        connectionURL="${spring.datasource.url}" userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+        </jdbcConnection>
+
+        <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
+        <javaModelGenerator targetPackage="com.clouderwork.pojo"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 生成Mapper 配置文件 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- javaClientGenerator是应用接口的生成信息 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.clouderwork.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!--<table tableName="sys_logs">-->
+        <!--</table>-->
+        <!--<table tableName="sys_menu">-->
+        <!--</table>-->
+        <!--<table tableName="sys_role">-->
+        <!--</table>-->
+        <!--<table tableName="sys_role_menu">-->
+        <!--</table>-->
+        <!--<table tableName="sys_user">-->
+        <!--</table>-->
+        <!--<table tableName="sys_user_role">-->
+        <!--</table>-->
+
+            <table tableName="t_article">
+            </table>
+            <table tableName="t_category">
+            </table>
+            <table tableName="t_category_article">
+            </table>
+            <table tableName="t_comments">
+            </table>
+            <table tableName="t_label">
+            </table>
+            <table tableName="t_label_article">
+            </table>
+        </context>
+    </generatorConfiguration>
